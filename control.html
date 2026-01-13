@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tablet Control</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #111;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .tablet {
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .tablet h2 {
+      margin-top: 0;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      margin-bottom: 10px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #00c853;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    button:active {
+      opacity: 0.7;
+    }
+
+    .hint {
+      font-size: 12px;
+      opacity: 0.6;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>📱 Tablet Image Control</h1>
+
+<div class="tablet">
+  <h2>Tablet 1</h2>
+  <input id="t1" placeholder="Image URL for tablet 1" />
+  <button onclick="update('tablet1', 't1')">Update Tablet 1</button>
+</div>
+
+<div class="tablet">
+  <h2>Tablet 2</h2>
+  <input id="t2" placeholder="Image URL for tablet 2" />
+  <button onclick="update('tablet2', 't2')">Update Tablet 2</button>
+</div>
+
+<p class="hint">
+  ⚠️ After clicking, GitHub will open state.json — just Commit changes.
+</p>
+
+<script>
+const RAW_STATE =
+  "https://raw.githubusercontent.com/DenRowan/remote-image-control/main/state.json";
+
+async function update(tablet, inputId) {
+  const url = document.getElementById(inputId).value;
+  if (!url) {
+    alert("Enter image URL");
+    return;
+  }
+
+  const res = await fetch(RAW_STATE);
+  const json = await res.json();
+
+  json[tablet].imageUrl = url;
+
+  const newJson = JSON.stringify(json, null, 2);
+
+  const blob = new Blob([newJson], { type: "application/json" });
+  const fileURL = URL.createObjectURL(blob);
+
+  window.open(fileURL, "_blank");
+}
+</script>
+
+</body>
+</html>
