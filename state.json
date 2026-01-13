@@ -1,0 +1,8 @@
+{
+  "tablet1": {
+    "imageUrl": "https://picsum.photos/800/600?tablet1"
+  },
+  "tablet2": {
+    "imageUrl": "https://picsum.photos/800/600?tablet2"
+  }
+}
